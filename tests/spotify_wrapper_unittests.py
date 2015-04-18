@@ -1,6 +1,5 @@
 import unittest
 import sys
-import time
 
 sys.path.append('../src/')
 import spotify_wrapper
@@ -17,21 +16,21 @@ class SpotifyWrapperTestCase(unittest.TestCase):
 
 
     def test_track_id(self):
-        self.assertEqual(spotify_wrapper.track_id(), test_id)
+        self.assertEqual(test_id, spotify_wrapper.track_id())
 
 
     def test_track_name(self):
-        self.assertEqual(spotify_wrapper.track_name(), test_name)
+        self.assertEqual(test_name, spotify_wrapper.track_name())
 
 
     def test_track_artist(self):
-        self.assertEqual(spotify_wrapper.track_artist(), test_artist)
+        self.assertEqual(test_artist, spotify_wrapper.track_artist())
 
 
     def test_player_state(self):
-        self.assertEqual(spotify_wrapper.player_state(), 'playing')
+        self.assertEqual('playing', spotify_wrapper.player_state())
         spotify_wrapper.play_pause()
-        self.assertEqual(spotify_wrapper.player_state(), 'paused')
+        self.assertEqual('paused', spotify_wrapper.player_state())
 
 
 if __name__ == '__main__':
