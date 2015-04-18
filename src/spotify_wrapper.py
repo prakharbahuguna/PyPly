@@ -21,6 +21,11 @@ def skip_track():
     subprocess.call([osabin, osaflag, cmd])
 
 
+def player_state():
+    cmd = '{} player state'.format(osacommand)
+    return subprocess.check_output([osabin, osaflag, cmd])[:-1]
+
+
 def track_id():
     cmd = '{} id of current track'.format(osacommand)
     return subprocess.check_output([osabin, osaflag, cmd])[:-1]
