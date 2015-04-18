@@ -29,11 +29,17 @@ class JukeboxControllerTestCase(unittest.TestCase):
         self.jukebox.setPlaylist(test_plist)
         self.jukebox.running = True
         self.t.start()
-        sleep(2)
+        sleep(5)
 
         self.assertEqual('playing', spotify_wrapper.player_state())
         self.assertEqual(test_plist[0], spotify_wrapper.track_id())
         self.assertEqual(test_plist[1], self.jukebox.playlist[0])
+
+        self.jukebox.setPlaylist(test_plist[2:])
+        self.assertEqual(test_plist[0], spotify_wrapper.track_id())
+        spotify_wrapper.skip_track()
+        sleep(5)
+        self.assertEqual(test_plist[2], spotify_wrapper.track_id())
 
     def tearDown(self):
         self.jukebox.running = False
