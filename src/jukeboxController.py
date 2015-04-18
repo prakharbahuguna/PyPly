@@ -8,12 +8,13 @@ class JukeboxController:
 
     def __init__(self):
         self.playlist = []
+        self.running = False
 
     def setPlaylist(self, pl):
         self.playlist = pl
 
     def spotifyController(self):
-        while True:
+        while self.running:
             status = spotify_wrapper.player_state()
             print status
             
@@ -27,10 +28,13 @@ class JukeboxController:
                 self.addToBackOfQueue(nextTrack)
             sleep(1)
 
+        spotify_wrapper.play_pause()
+
     def addToBackOfQueue(self, nextTrack):
         # Need to remove it from playlist and re-add at the end
         return
 
 if __name__ == "__main__":
     jukebox = JukeboxController
+    jukebox.running = True
     thread.start_new_thread(jukebox.spotifyController)
