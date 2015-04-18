@@ -1,6 +1,6 @@
 __author__ = 'matt'
 
-import thread
+import threading
 import spotify_wrapper
 from time import sleep
 from collections import deque
@@ -32,6 +32,8 @@ class JukeboxController:
 
 
 if __name__ == "__main__":
-    jukebox = JukeboxController
+    jukebox = JukeboxController()
     jukebox.running = True
-    thread.start_new_thread(jukebox.spotifyController, ())
+    t = threading.Thread(target=jukebox.spotifyController)
+    t.start()
+    t.join()

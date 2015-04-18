@@ -1,6 +1,6 @@
 import unittest
 import sys
-import thread
+import threading
 from time import sleep
 
 sys.path.append('../src/')
@@ -15,6 +15,7 @@ test_plist = ['spotify:track:5eZaT21ZVGyGHJ8kcwaNxA', 'spotify:track:3agtg0x11wP
 class JukeboxControllerTestCase(unittest.TestCase):
     def setUp(self):
         self.jukebox = JukeboxController()
+        self.t = threading.Thread(target=self.jukebox.spotifyController)
 
     def test_set_playlist(self):
         self.jukebox.running = False
@@ -27,7 +28,7 @@ class JukeboxControllerTestCase(unittest.TestCase):
 
         self.jukebox.setPlaylist(test_plist)
         self.jukebox.running = True
-        thread.start_new_thread(self.jukebox.spotifyController, ())
+        self.t.start()
         sleep(2)
 
         self.assertEqual('playing', spotify_wrapper.player_state())
@@ -36,4 +37,3 @@ class JukeboxControllerTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.jukebox.running = False
-        sleep(2)
