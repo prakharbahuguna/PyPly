@@ -5,13 +5,11 @@ import json
 
 
 class ZeroMQBroker:
-    LISTEN_PORT = "5556"
-
-    def __init__(self, jukebox):
+    def __init__(self, jukebox, server, port):
         # Socket to talk to server
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.SUB)
-        self.socket.connect('tcp://localhost:{}'.format(self.LISTEN_PORT))
+        self.socket.connect('tcp://{}:{}'.format(server, port))
         self.jukebox = jukebox
 
     def messageListener(self, partyID):

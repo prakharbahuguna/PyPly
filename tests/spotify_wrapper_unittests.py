@@ -14,18 +14,14 @@ class SpotifyWrapperTestCase(unittest.TestCase):
     def setUp(self):
         spotify_wrapper.play_track(test_id)
 
-
     def test_track_id(self):
         self.assertEqual(test_id, spotify_wrapper.track_id())
-
 
     def test_track_name(self):
         self.assertEqual(test_name, spotify_wrapper.track_name())
 
-
     def test_track_artist(self):
         self.assertEqual(test_artist, spotify_wrapper.track_artist())
-
 
     def test_player_state(self):
         self.assertEqual('playing', spotify_wrapper.player_state())
