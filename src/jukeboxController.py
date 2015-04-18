@@ -20,7 +20,7 @@ class JukeboxController:
             
             if not self.playlist:
                 print "Empty playlist - get some tunes sent in!"
-            elif status == "stopped":
+            elif status == 'paused' or status == 'stopped':
                 nextTrack = self.playlist.pop(0)
                 spotify_wrapper.play_track(nextTrack)
                 print "Now playing " + nextTrack
@@ -37,4 +37,4 @@ class JukeboxController:
 if __name__ == "__main__":
     jukebox = JukeboxController
     jukebox.running = True
-    thread.start_new_thread(jukebox.spotifyController)
+    thread.start_new_thread(jukebox.spotifyController, ())
