@@ -18,14 +18,14 @@ class JukeboxControllerTestCase(unittest.TestCase):
 
     def test_set_playlist(self):
         self.jukebox.running = False
-        self.jukebox.setPlaylist(test_plist[:])
-        self.assertEqual(self.jukebox.playlist, test_plist)
+        self.jukebox.setPlaylist(test_plist)
+        self.assertEqual(self.jukebox.playlist[0], test_plist[0])
 
     def test_playback(self):
         self.jukebox.running = False
         self.assertEqual('paused', spotify_wrapper.player_state())
 
-        self.jukebox.setPlaylist(test_plist[:])
+        self.jukebox.setPlaylist(test_plist)
         self.jukebox.running = True
         thread.start_new_thread(self.jukebox.spotifyController, ())
         sleep(2)
@@ -36,3 +36,4 @@ class JukeboxControllerTestCase(unittest.TestCase):
 
     def tearDown(self):
         self.jukebox.running = False
+        sleep(2)
