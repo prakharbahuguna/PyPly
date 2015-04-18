@@ -1,6 +1,7 @@
 __author__ = 'matt'
 
 import zmq
+import json
 
 class ZeroMQBroker:
     LISTEN_PORT = "5556"
@@ -25,7 +26,9 @@ class ZeroMQBroker:
                 argument = messageParts[2]
 
             if verb == "loadPlaylist":
-                print argument
+                spotifyURIs = json.loads(messageParts[2])
+
+
 
 if __name__ == "__main__":
     test = ZeroMQBroker()
