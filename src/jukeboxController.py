@@ -3,6 +3,7 @@ __author__ = 'matt'
 import threading
 import spotify_wrapper
 import urllib2
+import json
 from zeroMqBroker import ZeroMQBroker
 from time import sleep
 from collections import deque
@@ -37,8 +38,6 @@ class JukeboxController:
 if __name__ == "__main__":
     print('Enter Party ID:')
     partyId = stdin.readline()[:-1]
-    print('Enter Spotify Playlist URI:')
-    plist = stdin.readline()[:-1]
 
     jukebox = JukeboxController()
     jukebox.running = True
@@ -47,8 +46,13 @@ if __name__ == "__main__":
     mqBroker = ZeroMQBroker(jukebox, SERVER, PORT)
     brokerThread = threading.Thread(name='MessageListener', target=mqBroker.messageListener, args=(partyId,))
 
-    urllib2.urlopen('http://{}/setup/{}/{}'.format(SERVER, partyId, plist))
+    response = json.decode(urllib2.urlopen('http://{}/party/{}'.format(SERVER, partyId)))
+    if response['success']:
+        if response['playlist_prompt']:
+            print('Enter Spotify playlist URI:')
+            plist = stdin.readline()[:-1]
+            urllib2.urlopen('http://{}/playlist/{}/{}'.format(SERVER, partyId, plist))
 
-    jukeThread.start()
-    brokerThread.start()
-    jukeThread.join()
+        jukeThread.start()
+        brokerThread.start()
+        jukeThread.join()
