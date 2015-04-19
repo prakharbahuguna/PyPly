@@ -48,7 +48,7 @@ class JukeboxController:
 
 if __name__ == "__main__":
     #print('Enter Party ID:')
-    partyId = stdin.readline()[:-1]
+    #partyId = stdin.readline()[:-1]
 
     print "Using Party ID 1234"
     partyId = "1234"
