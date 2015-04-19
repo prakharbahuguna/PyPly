@@ -22,16 +22,20 @@ class JukeboxController:
         if self.currentSkipCount >= SKIP_THRESHOLD:
             self.goNextTrack()
 
+    def togglePausePlayer(self):
+        spotify_wrapper.play_pause()
+
     def pausePlayer(self):
         if spotify_wrapper.player_state() == 'playing':
             spotify_wrapper.play_pause()
 
     def goNextTrack(self):
-        self.currentSkipCount = 0
-        nextTrack = self.playlist.popleft()
-        self.playlist.append(nextTrack)
-        spotify_wrapper.play_track(nextTrack)
-        print('Now playing ' + nextTrack)
+        if self.playlist:
+            self.currentSkipCount = 0
+            nextTrack = self.playlist.popleft()
+            self.playlist.append(nextTrack)
+            spotify_wrapper.play_track(nextTrack)
+            print('Now playing ' + nextTrack)
 
     def setPlaylist(self, pl):
         self.playlist = deque(pl)
@@ -49,13 +53,13 @@ if __name__ == "__main__":
     #print('Enter Party ID:')
     #partyId = stdin.readline()[:-1]
 
-    print "Using Party ID 1234"
-    partyId = "1234"
+    print "Using Party ID party"
+    partyId = "party"
 
     jukebox = JukeboxController()
     jukeThread = threading.Thread(name='SpotifyController', target=jukebox.spotifyController)
 
-    redisBroker = RedisBroker()
+    redisBroker = RedisBroker(jukebox)
     brokerThread = threading.Thread(name='MessageListener', target=redisBroker.messageListener, args=(partyId,))
 
     #r = requests.get('http://{}/party/{}'.format(SERVER, partyId))
