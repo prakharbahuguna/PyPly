@@ -55,7 +55,7 @@ if __name__ == "__main__":
     jukebox = JukeboxController()
     jukeThread = threading.Thread(name='SpotifyController', target=jukebox.spotifyController)
 
-    redisBroker = RedisBroker(jukebox, SERVER)
+    redisBroker = RedisBroker()
     brokerThread = threading.Thread(name='MessageListener', target=redisBroker.messageListener, args=(partyId,))
 
     #r = requests.get('http://{}/party/{}'.format(SERVER, partyId))
