@@ -7,6 +7,7 @@ import json
 #from redisBroker import ZeroMQBroker
 from time import sleep
 from collections import deque
+import requests
 from sys import stdin
 
 SERVER = 'pyply.j.layershift.co.uk'
@@ -59,12 +60,11 @@ if __name__ == "__main__":
     #mqBroker = ZeroMQBroker(jukebox, SERVER, PORT)
     #brokerThread = threading.Thread(name='MessageListener', target=mqBroker.messageListener, args=(partyId,))
 
-#    response = json.decode(urllib2.urlopen('http://{}/party/{}'.format(SERVER, partyId)))
-#    if response['success']:
-#        if response['playlist_prompt']:
-#            print('Enter Spotify playlist URI:')
-#            plist = stdin.readline()[:-1]
-#            urllib2.urlopen('http://{}/playlist/{}/{}'.format(SERVER, partyId, plist))
+    #r = requests.get('http://{}/party/{}'.format(SERVER, partyId))
+    #if r.status_code == 200 and r.json()['success'] and r.json()['playlist_prompt']:
+        #print('Enter Spotify playlist URI:')
+        #plist = stdin.readline()[:-1]
+        #r = requests.get('http://{}/playlist/{}/{}'.format(SERVER, partyId, plist))
 
     jukeThread.start()
     #brokerThread.start()
