@@ -1,9 +1,7 @@
-__author__ = 'matt'
-
 import json
 from redis import Redis
 
-class ZeroMQBroker:
+class RedisBroker:
     def __init__(self):
         # Socket to talk to server
         self.redisClient = Redis(host="redis92559-pyply.j.layershift.co.uk", password="O3KcaI9RRj")
@@ -31,5 +29,5 @@ class ZeroMQBroker:
                 return
 
 if __name__ == '__main__':
-    underTest = ZeroMQBroker()
+    underTest = RedisBroker()
     underTest.messageListener(1234)

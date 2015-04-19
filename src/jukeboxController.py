@@ -2,9 +2,7 @@ __author__ = 'matt'
 
 import threading
 import spotify_wrapper
-import urllib2
-import json
-#from redisBroker import ZeroMQBroker
+from redisBroker import RedisBroker
 from time import sleep
 from collections import deque
 import requests
@@ -57,8 +55,8 @@ if __name__ == "__main__":
     jukebox = JukeboxController()
     jukeThread = threading.Thread(name='SpotifyController', target=jukebox.spotifyController)
 
-    #mqBroker = ZeroMQBroker(jukebox, SERVER, PORT)
-    #brokerThread = threading.Thread(name='MessageListener', target=mqBroker.messageListener, args=(partyId,))
+    redisBroker = RedisBroker(jukebox, SERVER)
+    brokerThread = threading.Thread(name='MessageListener', target=redisBroker.messageListener, args=(partyId,))
 
     #r = requests.get('http://{}/party/{}'.format(SERVER, partyId))
     #if r.status_code == 200 and r.json()['success'] and r.json()['playlist_prompt']:
@@ -67,5 +65,5 @@ if __name__ == "__main__":
         #r = requests.get('http://{}/playlist/{}/{}'.format(SERVER, partyId, plist))
 
     jukeThread.start()
-    #brokerThread.start()
+    brokerThread.start()
     jukeThread.join()
